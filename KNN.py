@@ -24,21 +24,13 @@ class KNN :
 
     def predict(self, X, Y_train,  Y_test):
 
-        predic = [0]*Y_test.count()
-        for i in range(Y_test.count()):
-            neighbors = self.fit(X, Y_test)
+        predic = [0]*Y_test.count()[0]
+        for i in range(Y_test.count()[1]):
+            neighbors = self.fit(X, Y_test.iloc[i, :])
             output_values = [res for res in Y_train.iloc[neighbors]]
             predic[i] = max(set(output_values), key=output_values.count)
 
         return predic
-
-
-    def normalize(self, X):
-        def normalize(X):
-            for i in range(X.shape[1]):
-                X.iloc[:, i] = X.iloc[:, i] / X.iloc[:, i].max()
-
-            return X
 
 
     def distance(self, X1, X2):

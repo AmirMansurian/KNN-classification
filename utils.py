@@ -8,12 +8,12 @@ def read_data(path, target_column):
 
     return X, Y
 
+
 def suffle_data (X, Y):
     X['target'] = Y
     X = X.sample(frac=1)
 
     return X.iloc[:, :-1], X.iloc[:, -1]
-
 
 
 def split_data(X, Y, ratio):
@@ -32,6 +32,7 @@ def precision (Y, predict):
 
     return (Y == predict).sum()/Y.count()
 
+
 def confusion_matrix (Y, predict):
     TP = TN = FP = FN = 0
 
@@ -48,6 +49,7 @@ def confusion_matrix (Y, predict):
     confusin_matrix = [[TP, FP], [FN, TN]]
     return confusin_matrix
 
+
 def report (Y, predict):
     confusio_matrix = confusion_matrix(Y, predict)
     TP, FP = confusio_matrix[0]
@@ -61,15 +63,7 @@ def report (Y, predict):
     return Accuracy, Precision, Recall, F1score
 
 
-
-
-X, Y = read_data('heart.csv', 'target')
-
-neighbors = fit(X, X.iloc[0, :], 5)
-output_values = [res for res in Y.iloc[neighbors]]
-
-
-X, Y = suffle_data(X, Y)
-print([0]*5)
-
-print(max(set(output_values), key=output_values.count))
+def normalize_data(X):
+    for i in range(X.shape[1]):
+        X.iloc[:, i] = X.iloc[:, i] / X.iloc[:, i].max()
+    return X
