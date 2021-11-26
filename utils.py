@@ -59,3 +59,17 @@ def report (Y, predict):
     F1score = (2*Precision*Recall)/(Precision + Recall)
 
     return Accuracy, Precision, Recall, F1score
+
+
+
+
+X, Y = read_data('heart.csv', 'target')
+
+neighbors = fit(X, X.iloc[0, :], 5)
+output_values = [res for res in Y.iloc[neighbors]]
+
+
+X, Y = suffle_data(X, Y)
+print([0]*5)
+
+print(max(set(output_values), key=output_values.count))
